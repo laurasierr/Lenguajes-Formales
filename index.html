@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lenguajes Formales</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <!-- Mi Propio CSS -->
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="custom-title centered">
+        <h3>Operaciones sobre Lenguajes Formales</h3>
+        <p>
+          Puede ingresar los símbolos que desee separados por coma. Una vez
+          terminado por favor escoja la operación que desea realizar y oprima el
+          botón [calcular].
+        </p>
+        <p>
+          En operaciones que sólo requieran de una entrada (potencia, cardinalidad, inverso)
+          sólo se tendrá en cuenta la primera casilla (Alfabeto#1).
+        </p>
+        <p>La palabra vacía está representada por el simbolo #</p>
+      </div>
+      <ul class="nav nav-pills nav-fill custom-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-mode="Alfabetos" onclick="selectMode(this)">Alfabetos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-mode="Lenguajes" onclick="selectMode(this)">Lenguajes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-mode="Palabras" onclick="selectMode(this)">Palabras</a>
+        </li>
+      </ul>
+      <div id="dvContent"></div>
+      <!-- Alfabetos -->
+      <template id="tpAlfabetos">
+        <div class="card centered" style="margin-top: 20px;">
+          <div class="card-body">
+            <div class="flex flex-centered">
+              <div class="form-group w-45">
+                <label for="itAf1">Alfabeto #1</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="itAf1"
+                  placeholder="a,b,c"
+                />
+              </div>
+              <div class="form-group w-45">
+                <label for="itAf2">Alfabeto #2</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="itAf2"
+                  placeholder="d,e,f"
+                />
+              </div>
+            </div>
+            <div class="dropdown" style="margin-top: 2rem">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                CALCULAR
+              </button>
+              <div class="dropdown-menu">
+                <a role="button" class="dropdown-item" data-tab="alfabetos" data-operation="Union" href="#" onclick="calcular(this)">Union</a>
+                <a role="button" class="dropdown-item" data-tab="alfabetos" data-operation="Interseccion" href="#" onclick="calcular(this)">Interseccion</a>
+                <a role="button" class="dropdown-item" data-tab="alfabetos" data-operation="Diferencia" href="#" onclick="calcular(this)">Diferencia</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <p id="restTitulo"></p>
+            <p id="res"></p>
+          </div>
+        </div>
+      </template>
+      <!-- Lenguajes -->
+      <template id="tpLenguajes">
+        <div class="card centered" style="margin-top: 20px;">
+          <div class="card-body">
+            <div class="flex flex-centered">
+              <div class="form-group w-45">
+                <label for="itLg1">Lenguaje #1</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="itLg1"
+                  placeholder="a,b,c"
+                />
+              </div>
+              <div class="form-group w-45">
+                <label for="itLg2">Lenguaje #2</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="itLg2"
+                  placeholder="d,e,f"
+                />
+              </div>
+            </div>
+            <div class="dropdown" style="margin-top: 2rem">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                CALCULAR
+              </button>
+              <div class="dropdown-menu">
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Union" href="#" onclick="calcular(this)">Union</a>
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Interseccion" href="#" onclick="calcular(this)">Interseccion</a>
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Diferencia" href="#" onclick="calcular(this)">Diferencia</a>
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Concatenacion" href="#" onclick="calcular(this)">Concatenacion</a>
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Potencia" href="#" onclick="calcular(this)">Potencia</a>
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Inverso" href="#" onclick="calcular(this)">Inverso</a>
+                <a role="button" class="dropdown-item" data-tab="lenguajes" data-operation="Cardinalidad" href="#" onclick="calcular(this)">Cardinalidad</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <p id="restTitulo"></p>
+            <p id="res"></p>
+          </div>
+        </div>
+      </template>
+      <!-- Palabras -->
+      <template id="tpPalabras">
+        <div class="card centered" style="margin-top: 20px;">
+          <div class="card-body">
+            <div class="flex flex-centered">
+              <div class="form-group w-45">
+                <label for="itP">Palabra</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="itP"
+                  placeholder="palabra"
+                />
+              </div>
+            </div>
+            <div class="dropdown" style="margin-top: 2rem">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                CALCULAR
+              </button>
+              <div class="dropdown-menu">
+                <a role="button" class="dropdown-item" data-tab="palabras" data-operation="Cardinalidad" href="#" onclick="calcular(this)">Cardinalidad</a>
+                <a role="button" class="dropdown-item" data-tab="palabras" data-operation="Inverso" href="#" onclick="calcular(this)">Inverso</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <p id="restTitulo"></p>
+            <p id="res"></p>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- Mi Propio JS -->
+    <script src="./index.js"></script>
+    <script src="./logica/alfabetos.js"></script>
+    <script src="./logica/lenguajes.js"></script>
+    <script src="./logica/palabras.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

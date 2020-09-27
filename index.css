@@ -1,0 +1,27 @@
+.centered {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-centered {
+  justify-content: space-around;
+}
+
+.flex-evenly {
+  justify-content: space-evenly;
+}
+
+.w-45 {
+  width: 45%;
+}
+
+.custom-title {
+  margin-top: 2rem;
+}
+
+.custom-tabs {
+  margin-top: 3rem;
+}
